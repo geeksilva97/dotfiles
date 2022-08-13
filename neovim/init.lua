@@ -42,10 +42,15 @@ end
 
 local lsp_flags = {
   -- This is the default in Nvim 0.7+
-  debounce_text_changes = 150,
+  debounce_text_changes = 700,
 }
 
 require('lspconfig')['pyright'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
+
+require('lspconfig')['html'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
 }
@@ -60,7 +65,7 @@ require('lspconfig')['solargraph'].setup{
     flags = lsp_flags,
 }
 
-vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("info")
 
 
 -- Add additional capabilities supported by nvim-cmp
@@ -70,13 +75,22 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 local lspconfig = require('lspconfig')
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'solargraph' }
+local servers = { 'clangd', 'html', 'rust_analyzer', 'pyright', 'tsserver', 'solargraph'  }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     -- on_attach = my_custom_on_attach,
     capabilities = capabilities,
   }
 end
+
+
+
+require'lspconfig'.elixirls.setup{
+    cmd = { "/home/edy/dev-tools/elixir-ls/language_server.sh" },
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities
+}
 
 -- luasnip setup
 local luasnip = require 'luasnip'
