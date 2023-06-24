@@ -13,8 +13,27 @@ return require('packer').startup(function()
   use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
 
+  -- Moonlight color scheme
+  use 'shaunsingh/moonlight.nvim'
+
+  use 'sheerun/vim-polyglot' -- Syntax highlight (it was not working for Elixir files)
+
   use 'tpope/vim-commentary'
+  use 'tpope/vim-dadbod'
+  use 'tpope/vim-surround'
+  use 'tpope/vim-fugitive'
+
   use 'itchyny/lightline.vim'
+
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    },
+    tag = 'nightly' -- optional, updated every week. (see issue #1193)
+  }
+
+  use 'vim-test/vim-test'
 
   -- Lazy loading:
   -- Load on specific commands
@@ -40,16 +59,11 @@ return require('packer').startup(function()
 --  use '~/projects/personal/hover.nvim'
 
   -- Plugins can have post-install/update hooks
-  use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
+  ---- install without yarn or npm
+  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
 
   -- Post-install/update hook with call of vimscript function with argument
   use { 'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
-
-  -- Use dependency and run lua function after load
-  use {
-    'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
-    config = function() require('gitsigns').setup() end
-  }
 
   -- You can alias plugin names
   use {'dracula/vim', as = 'dracula'}

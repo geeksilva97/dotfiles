@@ -45,6 +45,8 @@ local lsp_flags = {
   debounce_text_changes = 700,
 }
 
+require'lspconfig'.vuels.setup{}
+
 require('lspconfig')['pyright'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
@@ -65,17 +67,19 @@ require('lspconfig')['solargraph'].setup{
     flags = lsp_flags,
 }
 
+
 vim.lsp.set_log_level("info")
 
 
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+-- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local lspconfig = require('lspconfig')
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { 'clangd', 'html', 'rust_analyzer', 'pyright', 'tsserver', 'solargraph'  }
+local servers = { 'clangd', 'html', 'rust_analyzer', 'pyright', 'tsserver', 'solargraph' }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     -- on_attach = my_custom_on_attach,
@@ -83,7 +87,11 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-
+require'lspconfig'.gopls.setup{
+  cmd = { '/home/edy/.asdf/installs/golang/1.19/packages/bin/gopls' },
+  on_attach = on_attach,
+  flags = lsp_flags,
+}
 
 require'lspconfig'.elixirls.setup{
     cmd = { "/home/edy/dev-tools/elixir-ls/language_server.sh" },
@@ -135,3 +143,34 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+--
+-- examples for your init.lua
+
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+
+-- empty setup using defaults
+require("nvim-tree").setup()
+
+-- OR setup with some options
+require("nvim-tree").setup({
+  sort_by = "case_sensitive",
+  view = {
+    width = 30,
+    mappings = {
+      list = {
+        { key = "u", action = "dir_up" },
+      },
+    },
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
