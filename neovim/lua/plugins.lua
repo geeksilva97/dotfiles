@@ -7,6 +7,20 @@ return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
+  use({
+      "nvim-neo-tree/neo-tree.nvim",
+      branch = "v3.x",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+        "MunifTanjim/nui.nvim",
+        -- Optional image support in preview window: See `# Preview Mode` for more information
+        -- { "3rd/image.nvim", config = function() require('image').setup({}) end },
+        -- OR use snacks.nvim's image module:
+        -- "folke/snacks.nvim",
+      }
+    })
+
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
   use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
@@ -14,24 +28,22 @@ return require('packer').startup(function()
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
 
   -- Moonlight color scheme
-  use 'shaunsingh/moonlight.nvim'
+  -- use 'shaunsingh/moonlight.nvim'
 
   use 'sheerun/vim-polyglot' -- Syntax highlight (it was not working for Elixir files)
 
   use 'tpope/vim-commentary'
   use 'tpope/vim-dadbod'
   use 'tpope/vim-surround'
-  use 'tpope/vim-fugitive'
-
   use 'itchyny/lightline.vim'
 
-  use {
-    'nvim-tree/nvim-tree.lua',
-    requires = {
-      'nvim-tree/nvim-web-devicons', -- optional, for file icons
-    },
-    tag = 'nightly' -- optional, updated every week. (see issue #1193)
-  }
+  use({
+      "kdheepak/lazygit.nvim",
+      -- optional for floating window border decoration
+      requires = {
+        "nvim-lua/plenary.nvim",
+      },
+    })
 
   use 'vim-test/vim-test'
 
@@ -52,8 +64,8 @@ return require('packer').startup(function()
   }
 
   -- You can specify rocks in isolation
-  use_rocks 'penlight'
-  use_rocks {'lua-resty-http', 'lpeg'}
+  -- use_rocks 'penlight'
+  -- use_rocks {'lua-resty-http', 'lpeg'}
 
   -- Local plugins can be included
 --  use '~/projects/personal/hover.nvim'
@@ -71,4 +83,8 @@ return require('packer').startup(function()
   -- fzf
 	 use {'junegunn/fzf', dir = '~/.fzf', run = './install --all' }
 	 use {'junegunn/fzf.vim'}
-end)
+end, {
+  luarocks = {
+    python_cmd = 'python3'
+  }
+})
