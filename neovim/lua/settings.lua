@@ -120,6 +120,12 @@ vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 vim.keymap.set('n', '<leader><CR>', 'o<Esc>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>o', ':only<CR>', { noremap = true, silent = true })
 
+-- binding for :e!
+cmd("nnoremap <leader>E :e!<CR>")
+
+-- binding for :LazyGit
+cmd("nnoremap <leader>gg :LazyGit<CR>")
+
 -- Open a terminal with <leader>c
 vim.keymap.set('n', '<leader>c', function()
   -- Open a terminal in a horizontal split
@@ -131,6 +137,9 @@ end, { noremap = true, silent = true })
 
 -- Map <Esc> in terminal mode to go back to normal mode
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+
+-- LazyGit bindings
+cmd("nnoremap <leader>g <cmd>FloatermNew --height=0.9 --width=0.9 --autoclose=2 lazygit<cr>")
 
 -- cmd("nnoremap / <cmd>Neotree toggle current reveal_force_cwd<cr>")
 
