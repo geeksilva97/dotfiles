@@ -138,9 +138,6 @@ end, { noremap = true, silent = true })
 -- Map <Esc> in terminal mode to go back to normal mode
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 
--- LazyGit bindings
-cmd("nnoremap <leader>g <cmd>FloatermNew --height=0.9 --width=0.9 --autoclose=2 lazygit<cr>")
-
 -- cmd("nnoremap / <cmd>Neotree toggle current reveal_force_cwd<cr>")
 
 ---- nnoremap | :Neotree reveal<cr>
